@@ -1,6 +1,6 @@
-const links = (parent, args, context) => {
-  return context.prisma.user
-    .findOne({
+const links = (parent, __, { prisma }) => {
+  return prisma.user
+    .findUnique({
       where: { id: parent.id },
     })
     .links();

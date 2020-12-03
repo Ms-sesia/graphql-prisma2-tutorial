@@ -1,14 +1,14 @@
-const postedBy = (parent, args, context) => {
-  return context.prisma.link
-    .findOne({
+const postedBy = (parent, __, { prisma }) => {
+  return prisma.link
+    .findUnique({
       where: { id: parent.id },
     })
     .postedBy();
 };
 
-const votes = (parent, args, context) => {
-  return context.prisma.link
-    .findOne({
+const votes = (parent, __, { prisma }) => {
+  return prisma.link
+    .findUnique({
       where: { id: parent.id },
     })
     .votes();

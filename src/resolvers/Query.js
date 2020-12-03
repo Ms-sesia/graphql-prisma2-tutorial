@@ -1,26 +1,18 @@
-const feed = async (_, args, context, info) => {
+const feed = async (_, args, { prisma }) => {
   const where = args.filter
     ? {
-        OR: [{ description_contains: args.filter }, { url_contains: args.filter }],
+        OR: [{ description: { contains: args.filter } }, { url: { contains: args.filter } }],
       }
     : {};
 
-  const links = context.prisma.link.findMany();
-  console.log(links);
-  // const links = await context.prisma.links({
-  //   where,
-  //   skip: args.skip,
-  //   first: args.first,
-  //   orderBy: args.orderBy,
-  // });
+  const links = await prisma.link.findMany({
+    where,
+    skip: args.skip,
+    take: args.take,
+    orderBy: args.orderBy,
+  });
 
-  const count = 2;
-  // const count = await context.prisma
-  //   .linksConnection({
-  //     where,
-  //   })
-  //   .aggregate()
-  //   .count();
+  const count = await prisma.link.count({ where });
   return { links, count };
 };
 
