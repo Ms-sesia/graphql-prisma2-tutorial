@@ -5,6 +5,7 @@ const getUserId = (request) => {
   const Authorization = request.get("Authorization");
   if (Authorization) {
     const token = Authorization.replace("Bearer ", "");
+    console.log(jwt.verify(token, APP_SECRET));
     const { userId } = jwt.verify(token, APP_SECRET);
     return userId;
   }

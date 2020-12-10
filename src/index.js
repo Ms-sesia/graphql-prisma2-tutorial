@@ -9,6 +9,8 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
+const port = 4001;
+
 const server = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
   resolvers: { Query, Mutation, Subscription, User, Link, Vote },
@@ -17,4 +19,4 @@ const server = new GraphQLServer({
   },
 });
 
-server.start(() => console.log("http://localhost:4000에서 서버 가동중"));
+server.start({ port: port}, () => console.log("http://localhost:4001에서 서버 가동중"));
